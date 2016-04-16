@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>RxJava学习笔记(操作符) | Alpha Luo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言上一篇文章介绍了RxJava的基础知识和简单实现，篇幅已经比较多了，所以把操作符(Operators)相关的内容放在这一篇。有了上一篇文章的基础，相信会比较容易理解操作符相关的内容了。
+操作符(Operators)拿上一篇文章中的例子HelloWorld为例  
+12345678Observable.just(&quot;HelloWorld&quot;).subscribe(new Action1&amp;lt;Str">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RxJava学习笔记(操作符)">
+<meta property="og:url" content="http://yoursite.com/2016/04/07/RxJava学习笔记-操作符/index.html">
+<meta property="og:site_name" content="Alpha Luo">
+<meta property="og:description" content="前言上一篇文章介绍了RxJava的基础知识和简单实现，篇幅已经比较多了，所以把操作符(Operators)相关的内容放在这一篇。有了上一篇文章的基础，相信会比较容易理解操作符相关的内容了。
+操作符(Operators)拿上一篇文章中的例子HelloWorld为例  
+12345678Observable.just(&quot;HelloWorld&quot;).subscribe(new Action1&amp;lt;Str">
+<meta property="og:updated_time" content="2016-04-16T08:59:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RxJava学习笔记(操作符)">
+<meta name="twitter:description" content="前言上一篇文章介绍了RxJava的基础知识和简单实现，篇幅已经比较多了，所以把操作符(Operators)相关的内容放在这一篇。有了上一篇文章的基础，相信会比较容易理解操作符相关的内容了。
+操作符(Operators)拿上一篇文章中的例子HelloWorld为例  
+12345678Observable.just(&quot;HelloWorld&quot;).subscribe(new Action1&amp;lt;Str">
+  
+    <link rel="alternative" href="/atom.xml" title="Alpha Luo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head.png" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/">Alpha Luo</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">自信是通往成功之路的第一步</p>
+        
+        
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/Home">博客首页</a></li>
+                        
+                            <li><a href="/works">作品展示</a></li>
+                        
+                            <li><a href="/about">留言打卡</a></li>
+                        
+                            <li><a href="/FrontEndGuide">前端导航</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail" target="_blank" href="#" title="mail">mail</a>
+                            
+                                <a class="fl github" target="_blank" href="#" title="github">github</a>
+                            
+                                <a class="fl zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+                            
+                                <a class="fl weibo" target="_blank" href="#" title="weibo">weibo</a>
+                            
+                                <a class="fl google" target="_blank" href="#" title="google">google</a>
+                            
+                                <a class="fl twitter" target="_blank" href="#" title="twitter">twitter</a>
+                            
+                                <a class="fl facebook" target="_blank" href="#" title="facebook">facebook</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Alpha Luo</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.png" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Alpha Luo</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">自信是通往成功之路的第一步</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/Home">博客首页</a></li>
+                
+                    <li><a href="/works">作品展示</a></li>
+                
+                    <li><a href="/about">留言打卡</a></li>
+                
+                    <li><a href="/FrontEndGuide">前端导航</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="#" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="#" title="github">github</a>
+                    
+                        <a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+                    
+                        <a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+                    
+                        <a class="google" target="_blank" href="#" title="google">google</a>
+                    
+                        <a class="twitter" target="_blank" href="#" title="twitter">twitter</a>
+                    
+                        <a class="facebook" target="_blank" href="#" title="facebook">facebook</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-RxJava学习笔记-操作符" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/07/RxJava学习笔记-操作符/" class="article-date">
+      <time datetime="2016-04-06T16:00:00.000Z" itemprop="datePublished">2016-04-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      RxJava学习笔记(操作符)
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/RxJava/">RxJava</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RxJava/">RxJava</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/操作符/">操作符</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上一篇文章介绍了RxJava的基础知识和简单实现，篇幅已经比较多了，所以把操作符(Operators)相关的内容放在这一篇。有了上一篇文章的基础，相信会比较容易理解操作符相关的内容了。</p>
+<h2 id="操作符-Operators"><a href="#操作符-Operators" class="headerlink" title="操作符(Operators)"></a>操作符(Operators)</h2><p>拿上一篇文章中的例子HelloWorld为例  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Observable.just(<span class="string">"HelloWorld"</span>).subscribe(<span class="keyword">new</span> Action1&lt;String&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        Log.d(LOG_TAG, s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>  
+<p>如果希望在输出的字符串后面加上特定字符，比如说”***”，这时候如果我们可以修改Observable对象，那么可以直接在后面加上拼接字符串，程序如下所示  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Observable.just(<span class="string">"HelloWorld***"</span>).subscribe(<span class="keyword">new</span> Action1&lt;String&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        Log.d(LOG_TAG, s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>  
+<p>但是，如果我们不可以修改Observable对象呢，比如说它是由第三方库提供的呢？或者，这个Observable被多个Observer对象订阅，但是我们只想针对某个Observer做修改呢？这时候可以在Observer中进行修改，程序如下所示  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Observable.just(<span class="string">"HelloWorld"</span>).subscribe(<span class="keyword">new</span> Action1&lt;String&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        Log.d(LOG_TAG, s + <span class="string">"***"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>  
+<p>这种方式，看似解决了问题，但是仍然是不够的，此时的Observer不够轻量，根据响应式函数编程的概念，Observer应该做的事情是”响应“，响应Observable发出的事件，而不是修改。如果我们能在Observable发出事件之后，Observer订阅事件之前对“HelloWorld”进行变换，那不就好了！</p>
+<h3 id="map操作符"><a href="#map操作符" class="headerlink" title="map操作符"></a>map操作符</h3><p>RxJava里面，提供了操作符，用于解决Observable对象变换的问题，用于在Observable和Observer之间修改Observable发出的事件，map操作符就是把一个事件转换成另外一个事件的，程序如下所示  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Observable.just(<span class="string">"HelloWorld"</span>).map(<span class="keyword">new</span> Func1&lt;String, String&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">call</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s + <span class="string">"***"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).subscribe(<span class="keyword">new</span> Action1&lt;String&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        Log.d(LOG_TAG, s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>  
+<p>上面的程序中，转换前后的Observable对象类型是相同的，如果，我们能做到转换前后的数据类型是不同的，是不是会更加酷呢？比如说，Observer不关心返回的字符串，而是想要字符串的hash值，那么就可以这么做  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Observable.just(&quot;HelloWorld&quot;).map(new Func1&lt;String, Integer&gt;() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public Integer call(String s) &#123;</span><br><span class="line">        return s.hashCode();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).subscribe(new Action1&lt;Integer&gt;() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void call(Integer integer) &#123;</span><br><span class="line">        Log.d(LOG_TAG, Integer.toString(integer));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>  
+<p>太酷了，我们初始化Observable对象返回的是字符串，最终Observer获取的是Integer。如果简化一下Observer，我们可以再增加一个map操作符，程序如下  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Observable.just(<span class="string">"HelloWorld"</span>).map(<span class="keyword">new</span> Func1&lt;String, Integer&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">call</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s.hashCode();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).map(<span class="keyword">new</span> Func1&lt;Integer, String&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">call</span><span class="params">(Integer integer)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Integer.toString(integer);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).subscribe(<span class="keyword">new</span> Action1&lt;String&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        Log.d(LOG_TAG, s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>  
+<p>代码量虽然变多了，但是程序变得更加简洁！</p>
+<h3 id="from操作符"><a href="#from操作符" class="headerlink" title="from操作符"></a>from操作符</h3><p>这时候，如果我们要发出的事件不再是一个字符串，而是一个字符串列表，如果用现有的知识，程序如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Observable.just(stringList).subscribe(<span class="keyword">new</span> Action1&lt;List&lt;String&gt;&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(List&lt;String&gt; strings)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (String s : strings) &#123;</span><br><span class="line">            Log.d(LOG_TAG, s);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>  
+<p>这种代码是比较糟糕的，因为在我们的Observer中竟然要做for循环这种复杂的操作，有没有办法简化呢？这时候，from操作符可以帮到我们，程序如下  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Observable.from(stringList).subscribe(<span class="keyword">new</span> Action1&lt;String&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        Log.d(LOG_TAG, s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>  
+<p>现在的程序看起来很好，for循环消失了，因为from操作符就是用来接收一个集合，然后每次输出一个元素给Observer的！这时，如果我们还要做事件对象的变换，可以这样  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Observable.from(stringList).map(<span class="keyword">new</span> Func1&lt;String, Integer&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">call</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s.hashCode();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).subscribe(<span class="keyword">new</span> Action1&lt;Integer&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(Integer integer)</span> </span>&#123;</span><br><span class="line">        Log.d(LOG_TAG, Integer.toString(integer));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>  
+<p>简洁明了，看着舒服，哈哈！<br>现在有一个需求，有教师这样的一个数据结构，里面有名字name和课程列表courseList，现在要打印一组老师的名字，程序如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Observable.from(teacherList).subscribe(<span class="keyword">new</span> Action1&lt;Teacher&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(Teacher teacher)</span> </span>&#123;</span><br><span class="line">        Log.d(LOG_TAG, teacher.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>  
+<h3 id="flatMap操作符"><a href="#flatMap操作符" class="headerlink" title="flatMap操作符"></a>flatMap操作符</h3><p>实现很简单，那么再有一个需求，要打印出每个教师所教授的课程名称呢？(两个需求的区别在于，每个教师只有一个名字，但是可以教授多门课程)，我们首先可能会这么写  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Observable.from(teacherList).subscribe(<span class="keyword">new</span> Action1&lt;Teacher&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(Teacher teacher)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (Course course : teacher.getCourseList()) &#123;</span><br><span class="line">            Log.d(LOG_TAG, course.getCourseName());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>  
+<p>同样的问题又来了，我们的Observer不够轻量，在里面做了for循环的操作，而且，这时候map和from操作符也不能解决问题，因为map做的是一对一的变换，所以flatMap出场了，程序如下  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Observable.from(teacherList).flatMap(<span class="keyword">new</span> Func1&lt;Teacher, Observable&lt;Course&gt;&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Observable&lt;Course&gt; <span class="title">call</span><span class="params">(Teacher teacher)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Observable.from(teacher.getCourseList());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).subscribe(<span class="keyword">new</span> Action1&lt;Course&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(Course course)</span> </span>&#123;</span><br><span class="line">        Log.d(LOG_TAG, course.getCourseName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>  
+<p>代码又重新变得简洁明了，实现了一个teacher到多个Course对象的变换！这里需要注意一下，虽然map和flatMap操作符都是把传入参数转换后返回另一个对象，但是flatMap操作符返回的是Observable对象，并且这个 Observable 对象并不是被直接发送到了Observer的回调方法中！flatMap的原理：</p>
+<ul>
+<li>使用传入的事件对象创建一个Observable对象</li>
+<li>将这个新的Observable对象激活，于是事件由这个新的对象发出</li>
+<li>每一个创建出来的Observable对象发送的事件，都被汇入同一个Observable，而这个Observable负责将这些事件统一交给Observer的回调方法</li>
+</ul>
+<h3 id="其它操作符"><a href="#其它操作符" class="headerlink" title="其它操作符"></a>其它操作符</h3><p>到目前为止，我们已经接触了map、from、flatMap等强大而且常用的操作符，但是RxJava中还有很多其它的操作符：</p>
+<h4 id="filter操作符"><a href="#filter操作符" class="headerlink" title="filter操作符"></a>filter操作符</h4><p>比如说我们在输出课程名字的时候，不想输出数学这门科目，我们可以这么做  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Observable.from(teacherList).flatMap(<span class="keyword">new</span> Func1&lt;Teacher, Observable&lt;Course&gt;&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Observable&lt;Course&gt; <span class="title">call</span><span class="params">(Teacher teacher)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Observable.from(teacher.getCourseList());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).filter(<span class="keyword">new</span> Func1&lt;Course, Boolean&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Boolean <span class="title">call</span><span class="params">(Course course)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> !course.equals(<span class="string">"数学"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).subscribe(<span class="keyword">new</span> Action1&lt;Course&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(Course course)</span> </span>&#123;</span><br><span class="line">        Log.d(LOG_TAG, course.getCourseName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>  
+<p>filter操作符会输入和输出相同的对象，并且可以过滤掉不满足条件的。</p>
+<h4 id="take操作符"><a href="#take操作符" class="headerlink" title="take操作符"></a>take操作符</h4><p>比如说我们在输出课程的时候，课程可能会有很多，我们只想最多输出五门课程，我们可以这么做  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Observable.from(teacherList).flatMap(<span class="keyword">new</span> Func1&lt;Teacher, Observable&lt;Course&gt;&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Observable&lt;Course&gt; <span class="title">call</span><span class="params">(Teacher teacher)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Observable.from(teacher.getCourseList());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).filter(<span class="keyword">new</span> Func1&lt;Course, Boolean&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Boolean <span class="title">call</span><span class="params">(Course course)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> !course.equals(<span class="string">"数学"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).take(<span class="number">5</span>)</span><br><span class="line">   .subscribe(<span class="keyword">new</span> Action1&lt;Course&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(Course course)</span> </span>&#123;</span><br><span class="line">        Log.d(LOG_TAG, course.getCourseName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>  
+<p>当然了，RxJava还有很多好用的操作符，要知道Observable这个类可是有九千多，接近一万行代码呢，更多的内容，就不在这里记录了。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a href="http://gank.io/post/560e15be2dca930e00da1083" target="_blank" rel="external">给 Android 开发者的 RxJava 详解</a></li>
+<li><a href="http://blog.csdn.net/lzyzsd/article/details/41833541" target="_blank" rel="external">深入浅出RxJava（一：基础篇）</a></li>
+</ul>
+
+      
+
+
+<!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="lysonluo" data-title="标题" data-url="http://lysonluo.github.io"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"lysonluo"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+
+
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/04/07/RxJava学习笔记-操作符/">RxJava学习笔记(操作符)</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 Alpha Luo 的个人博客">Alpha Luo</a></p>
+        <p><span>发布时间:</span>2016年04月07日 - 00时00分</p>
+        <p><span>最后更新:</span>2016年04月16日 - 16时59分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/04/07/RxJava学习笔记-操作符/" title="RxJava学习笔记(操作符)">http://yoursite.com/2016/04/07/RxJava学习笔记-操作符/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/04/07/RxJava学习笔记-操作符/　　作者: Alpha Luo" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2016/04/06/RxJava学习笔记一/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">RxJava学习笔记(基础篇)</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作符-Operators"><span class="toc-number">2.</span> <span class="toc-text">操作符(Operators)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#map操作符"><span class="toc-number">2.1.</span> <span class="toc-text">map操作符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#from操作符"><span class="toc-number">2.2.</span> <span class="toc-text">from操作符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#flatMap操作符"><span class="toc-number">2.3.</span> <span class="toc-text">flatMap操作符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其它操作符"><span class="toc-number">2.4.</span> <span class="toc-text">其它操作符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#filter操作符"><span class="toc-number">2.4.1.</span> <span class="toc-text">filter操作符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#take操作符"><span class="toc-number">2.4.2.</span> <span class="toc-text">take操作符</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文章"><span class="toc-number">3.</span> <span class="toc-text">参考文章</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2016/04/07/RxJava学习笔记-操作符/" data-title="RxJava学习笔记(操作符)" data-url="http://yoursite.com/2016/04/07/RxJava学习笔记-操作符/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"lysonluo"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+</div>
+
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2016/04/06/RxJava学习笔记一/" title="下一篇: RxJava学习笔记(基础篇)">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/04/07/RxJava学习笔记-操作符/">RxJava学习笔记(操作符)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/06/RxJava学习笔记一/">RxJava学习笔记(基础篇)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/30/《第一行代码》学习笔记一/">《第一行代码》学习笔记一</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/22/github-pages＋hexo构建个人博客/">Mac环境下Github Pages + Hexo搭建个人博客</a></li></ul>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2016 Alpha Luo
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >本站到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 21;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+  </div>
+</body>
+</html>
